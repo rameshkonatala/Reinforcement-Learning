@@ -1,6 +1,6 @@
 # Reinforcement Learning
 
-This repository contains the solutions to the exercises and code to certain problems in the Reinforcement Learning - An Introduction book by Sutton and Barto
+This repository contains the solutions to the exercises and code to problems in the **Reinforcement Learning - An Introduction book by Sutton and Barto**
 
 <!---
 ## Getting Started
