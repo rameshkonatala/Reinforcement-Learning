@@ -7,7 +7,7 @@ The framework is abstract and
 exible and can be applied in many different ways. Stretch its limits in
 some way in at least one of your examples.
 
-Solution 2.1  
+Solution 2.1   
 |  Scenario|   Action      | State | Reward  |
 |:--------:|:-------------:|:-----:|---|
 | col 1 is |  left-aligned | $1600 |   |
