@@ -1,4 +1,4 @@
-# Chapter 2 - Markov Decision Process
+# Chapter 3 - Markov Decision Process
 
 ## Exercise 3.1  
 Devise three example tasks of your own that fit into the MDP framework, identifying for
@@ -7,9 +7,9 @@ The framework is abstract and
 exible and can be applied in many different ways. Stretch its limits in
 some way in at least one of your examples.
 
-Solution 2.1   
-|  Scenario|   Action      | State | Reward  |
-|:--------:|:-------------:|:-----:|---|
-| col 1 is |  left-aligned | $1600 |   |
-| col 2 is |    centered   |  $12  |   |
-| col 3 is | right-aligned |   $1  |   |
+Solution 3.1   
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
