@@ -64,6 +64,7 @@ classdef gamblersProblem < dynamicprops
             for a  = res.valid_actions
                 res.value_action(a==res.valid_actions) = obj.evaluateValue(s,a);
             end
+            
             best_action = res.valid_actions(max(res.value_action)==res.value_action);
             best_action = best_action(1);
             function valid_actions = validAction(s)
