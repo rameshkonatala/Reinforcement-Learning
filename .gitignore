@@ -2,3 +2,7 @@
 *.jpg
 *.jpeg
 *.fig
+*venv
+*.idea
+*.mat
+.gitignore

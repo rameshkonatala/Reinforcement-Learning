@@ -1,6 +1,16 @@
 %% clear all;
 clear; clc;
 
+%% plot the reward distribution 
+currentBandit = bandit; currentBandit.initialize;samples = 10000;
+reward_dist = zeros(samples,currentBandit.arms);
+for i = 1:currentBandit.arms
+    reward_dist(:,i) = [normrnd(currentBandit.q_true(i),1,[1,samples])]';
+end
+violin(reward_dist); xlabel("Actions");ylabel("Reward Distribution"); grid minor; legend('off');
+hline = refline([0 0]);hline.LineStyle = '--';hline.Color = 'k';
+garyfyFigure;
+
 %% run epsilon greedy algorithm
 clear
 epsilons = [0 0.01 0.1]; results.epsilons = epsilons;
@@ -21,17 +31,20 @@ end
 close all;
 figure
 for i = [1:numel(epsilons)]
+    subplot(1,2,1);
     plot(results.avg_reward{i},'DisplayName',strcat('Epsilon : ',num2str(results.epsilons(i))));
     xlabel('Steps');ylabel('Average reward'); grid on;
-    legend('-DynamicLegend'); 
+    pbaspect([1 1 1]);
+    legend('-DynamicLegend','Location','southeast'); 
     hold on
 end
 
-figure
 for i = [1:numel(epsilons)]
+    subplot(1,2,2);
     plot(100*results.opt_action{i},'DisplayName',strcat('Epsilon : ',num2str(results.epsilons(i))));
     xlabel('Steps');ylabel('% Optimal action'); grid on;
-    legend('-DynamicLegend');
+    pbaspect([1 1 1]);
+    legend('-DynamicLegend','Location','southeast'); 
     hold on
 end
 
@@ -50,17 +63,20 @@ fixed_step_bandit.nonstationary = true;
 
 close all;
 figure
-plot(mean(sample_average_avg,1),'DisplayName','?-greedy');xlabel('Steps');ylabel('Average reward');grid on;
+subplot(1,2,1);
+plot(mean(sample_average_avg,1),'DisplayName','sample average');xlabel('Steps');ylabel('Average reward');grid on;
 hold on
 plot(mean(fixed_step_avg,1),'DisplayName','fixed step');
-legend('-DynamicLegend');
+legend('-DynamicLegend','Location','southeast');
+pbaspect([1 1 1]);
 
 
-figure
-plot(100*mean(sample_average_opt,1),'DisplayName','?-greedy');xlabel('Steps');ylabel('% Optimal action');grid on;
+subplot(1,2,2);
+plot(100*mean(sample_average_opt,1),'DisplayName','sample average');xlabel('Steps');ylabel('% Optimal action');grid on;
 hold on
 plot(100*mean(fixed_step_opt,1),'DisplayName','fixed step');
-legend('-DynamicLegend');
+legend('-DynamicLegend','Location','southeast');
+pbaspect([1 1 1]);
 
 %% compare optimistic initial value algorithm
 clear
@@ -76,11 +92,13 @@ initial_value_bandit.initial_estimate = 5;
 
 close all;
 figure
-plot(100*mean(baseline_opt,1),'DisplayName','Realistic ?-greedy');
+plot(100*mean(baseline_opt,1),'DisplayName','\textbf{Realistic $\epsilon$-greedy}');
 hold on
-plot(100*mean(initial_value_opt,1),'DisplayName','Optimistic greedy');
-legend('-DynamicLegend');
+plot(100*mean(initial_value_opt,1),'DisplayName','\textbf{Optimistic greedy}');
+leg = legend('-DynamicLegend','Location','southeast');
+set(leg,'Interpreter','latex');
 xlabel('Steps');ylabel('% Optimal action');grid on;
+set(gca,'FontSize',13,'FontWeight','Bold')  
 
 %% UCB algorithm
 clear
@@ -97,11 +115,13 @@ UCBbandit.epsilon = 0;
 
 close all;
 figure
-plot(mean(baseline_avg,1),'DisplayName','?-greedy')
+plot(mean(baseline_avg,1),'DisplayName','\textbf{$\epsilon$-greedy}')
 hold on
-plot(mean(UCB_avg,1),'DisplayName','UCB c=2')
+plot(mean(UCB_avg,1),'DisplayName','\textbf{UCB c=2}')
 xlabel('Steps');ylabel('Average reward');grid on;
-legend('-DynamicLegend');
+leg = legend('-DynamicLegend','Location','southeast');
+set(leg,'Interpreter','latex');
+set(gca,'FontSize',13,'FontWeight','Bold')
 
 %%  gradient bandit algorithms
 gradient_bandit = bandit;
@@ -111,15 +131,17 @@ gradient_bandit.q_true_mean = 4;
 gradient_without_baseline_bandit = bandit;
 gradient_without_baseline_bandit.gradient = true;
 gradient_without_baseline_bandit.gradient_baseline = false;
-gradient_without_baseline_bandit.q_true_mean = 0;
+gradient_without_baseline_bandit.q_true_mean = 4;
 
 [~,gradient_opt] = gradient_bandit.simulate;
 [~,gradient_without_baseline_opt] = gradient_without_baseline_bandit.simulate;
 
 close all;
 figure
-plot(100*mean(gradient_opt,1),'DisplayName','with baseline');
+plot(100*mean(gradient_opt,1),'DisplayName','\textbf{with baseline}');
 hold on
-plot(100*mean(gradient_without_baseline_opt,1),'DisplayName','without baseline');
-legend('-DynamicLegend');
+plot(100*mean(gradient_without_baseline_opt,1),'DisplayName','\textbf{without baseline}');
+leg = legend('-DynamicLegend','Location','southeast');
+set(leg,'Interpreter','latex');
 xlabel('Steps');ylabel('% Optimal action');grid on;
+set(gca,'FontSize',13,'FontWeight','Bold')
